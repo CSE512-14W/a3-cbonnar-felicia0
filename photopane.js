@@ -3,10 +3,18 @@ function placePhotosInPane(){
 }
 var currentFilters = {}
 var currentSort = "time";
+var colorCodes = {
+				"breakfast":"rgb(146,128,169)",
+				"lunch": "rgb(0,167,141)",
+				"dinner": "rgb(252,185,37)",
+				"snack": "rgb(236,51,48)",
+				"beverage": "rgb(51,120,63)",
+				"other": "rgb(64,10,88)"
+				}
 
 $(document).ready(function() {
-	$("#photopane").css("height",400)
-	$("#photopane").css("width",'100%')
+
+	$("#photopane").css("width",'99%')
 	
 	$.get('/part15.csv', function(data) {
 	  	foodPhotoData = JSON.parse(CSV2JSON(data));
@@ -25,13 +33,18 @@ $(document).ready(function() {
 	  		var numPeople = f.social_howmany
 	  		createPin(timestamp_eaten,imgPath,description, starRating, meal,location,numPeople,date,dayOfWeek)
 	  	}
+	  	sortPhotos($("#date"))
 	});
+	meals = Object.keys(colorCodes)
+	for (m in meals){
+		$("#"+meals[m]+"_color").css("background-color",colorCodes[meals[m]])
+	}
 });
 
 
 function createPin(timestamp_eaten,imgPath, description, stars,meal,location,numPeople,date, dayOfWeek){
 
-	if(meal ==  undefined){
+	if(meal ==  "undefined"){
 		console.log("MEAL OTHER \n")
 		meal = "other"
 	}
@@ -46,76 +59,29 @@ function createPin(timestamp_eaten,imgPath, description, stars,meal,location,num
 						.attr("numPeople",numPeople)
 						.attr("timestamp_eaten",timestamp_eaten)
 	
-	if(meal == "breakfast"){
-		pin.css("background-color","purple")
-	}
-	else if(meal == "dinner"){
-		pin.css("background-color","red")
-	}
-	else if(meal == "snack"){
-		pin.css("background-color","green")
-	}
-	else if(meal == "dinner"){
-		pin.css("background-color","blue")
-	}
-	else if(meal == "beverage"){
-		pin.css("background-color","orange")
-	}
-	else if(meal == "other"){
-		pin.css("background-color","pink")
-	}
-	else if(meal == "lunch"){
-		pin.css("background-color","yellow")
-	}
-		
+	
+	pin.css("background-color",colorCodes[meal])
 	if(imgPath == null){
 		imgPath = 'about:blank'
 	}
-	var pinImage = $("<img>").attr("src","http://"+imgPath)
-	$(".pin").mouseover(function(){showImageTooltip($(this))})
+	var pinImage = $("<img>").attr("src","http://"+imgPath)//.attr("title","The tooltip text #1")
 	
-	//pinTooltip = $("<a>").attr("id","ltip")
-	//pinTooltip.append(pinImage)
-	//var pinDescription = $("<p>").html(description)
+	pinImage.attr("id","img_"+timestamp_eaten);
 	
 	pin.append(pinImage)//.append(pinDescription)
-	//pin.append('');
-	//<div class = "tooltip_photo" id="tooltip_'+timestamp_eaten+' timestampe_eaten="'+timestamp_eaten+'">hello</div>
 	
-	pin.hover(function(){
-		console.log($(this).attr("timestamp_eaten"))
-    	$("#tooltip").show().animate({width:"75px"},0) //Show tooltip
-			}, function() {
-        $("#tooltip").hide().animate({width:"0"},0) //Hide tooltip
-    })
-    
-    pin.mousemove(function(e){
-    	var newLeft = (this).offsetLeft + $(this).width()+5
-		var newTop = (this).offsetTop //+ $(this).height()
-   	 
-		//$("#tooltip").css({left:newLeft, top:newTop, width:$(this).width(), height:$(this).height(),backgroundColor:"red"});
-		$("#tooltip").css({left:e.pageX-25, top:e.pageY-100});
-		$("#tooltip").html("description " + $(this).attr("description"))
-   	 //$("#tooltip").css({left:e.pageX-120, top:e.pageY-80});
-	});
-	
-	
-	
-	//pin.append('<a id="ltip"+ href="#" title="">image of 1 Maple St.</a>');
 	$("#photopane").append(pin)
-	//$("#pin_"+timestamp_eaten+"#ltip").tooltip({ content: '<img src="http://icdn.pro/images/fr/a/v/avatar-barbe-brun-homme-utilisateur-icone-9665-128.png" />' }); 
 	
-	
-	
-	$("#pin_"+timestamp_eaten +" #ltip").tooltip({ content: '<img src="http://icdn.pro/images/fr/a/v/avatar-barbe-brun-homme-utilisateur-icone-9665-128.png" />' });
+/*
+	$("#photopane img[title] ").tooltip({
+        effect: 'slide',
+        direction: 'right',
+        bounce: true,
+        slideOffset: 40
+    });
+*/
+
 	return pin
-}
-
-
-function showImageTooltip(thePin){
-	//console.log("tooltippy",thePin);
-
-
 }
 
 function filterPhotos(json){
@@ -137,33 +103,28 @@ function filterPhotos(json){
 	})
 }
 
-
-
-
-
-
-
-
 function sortPhotos(radioClicked){
 	console.log("click")
 	console.log(radioClicked)
+	if($(radioClicked).attr("value")!=currentSort){
 	currentSort = $(radioClicked).attr("value")
-	console.log(currentSort)
-	var sortedDivs = $(".unsorted").find("div").toArray().sort(sorter);
-		$.each(sortedDivs, function (index, value) {
-		$(".unsorted").append(value);
-	});
-	
-	//sortByData('rating',"descending");	
+		console.log(currentSort)
+		var sortedDivs = $(".unsorted").find("div").toArray().sort(sorter);
+			$.each(sortedDivs, function (index, value) {
+			$(".unsorted").append(value);
+		});	
+	}
 }
 
 function sorter(a, b) {
+	console.log("starting to sort: "+ currentSort)
 	if(currentSort == 'stars'){
+		console.log("sorting by: stars")
 		console.log(b.getAttribute(currentSort) - a.getAttribute(currentSort))
 		return b.getAttribute(currentSort) - a.getAttribute(currentSort);
 	}
 	else if(currentSort == 'dateTime'){
-		console.log("datetime")
+		console.log("sorting by: datetime")
 		console.log("b"+b.getAttribute(currentSort))
 		console.log("a"+a.getAttribute(currentSort))
 		console.log(b.getAttribute(currentSort) > a.getAttribute(currentSort))
@@ -175,6 +136,7 @@ function sorter(a, b) {
 		}
 	}
 	else if(currentSort == 'meal'){
+		console.log("sorting by: stars")
 		if(b.getAttribute(currentSort) > a.getAttribute(currentSort)){
 			return -1;
 		}
@@ -186,119 +148,13 @@ function sorter(a, b) {
 
 
 
-function sortByData(sortBy,order){
-
-	if(sortBy == 'rating' && currentSort!='rating'){
-		var allImages=[]
-		
-		$(".pin").each(function(){
-			allImages.push($(this))
-		})
-		/*
-		if(order == 'descending'){
-			allImages = allImages.sort(function(a,b){return a.attr('starRating') - b.attr('starRating')})
-
-			for (var i = 0; i < allImages.length; i++) {
-				var self = $(allImages[i]);
-				self.detach();
-				$("#photopane").prepend(self);
-			}
-		}
-		else{
-			allImages = allImages.sort(function(a,b){return b.attr('starRating') - a.attr('starRating')})
-
-			for (var i = 0; i < allImages.length; i++) {
-				var self = $(allImages[i]);
-				self.detach();
-				$("#photopane").prepend(self);
-			}
-		}
-		*/
-		$('div.pin').sort(function(a,b){
-			var contentA =parseInt( $(a).attr('stars'));
-			var contentB =parseInt( $(b).attr('stars'));
-			return (contentA < contentB) ? -1 : (contentA > contentB) ? 1 : 0;
-		})
-	}
-	/*
-	else if(sortBy == 'time'){
-		if($("#timeButton").attr('sortBy')=='desc'){
-			$("#timeButton").attr('sortBy','asc')
-			$("#timeButton").css('background-color','rgb(66, 194, 90)')
-			$("#timeButton").html('Time &#x25B2;');
-			$("#timeButton").css('height','20px');
-			order = 'ascending';
-			currentSortby ='timeAsc'
-		}
-		else if($("#timeButton").attr('sortBy')=='asc'){
-			$("#timeButton").attr('sortBy','desc')
-			$("#timeButton").css('background-color','rgb(66, 194, 90)')
-			$("#timeButton").html('Time &#x25BC;');
-			order = 'descending';
-			currentSortby ='timeDesc'
-		}
-		else if($("#timeButton").attr('sortBy')=='none'){
-			$("#timeButton").attr('sortBy','desc')
-			$("#timeButton").css('background-color','rgb(66, 194, 90)')
-			$("#timeButton").html('Time &#x25BC;');
-			
-			$("#completenessButton").css('background-color','')
-			$("#ratingButton").css('background-color','')
-			
-			$("#completenessButton").html('Completeness')
-			$("#ratingButton").html('Rating')
-			
-			$("#completenessButton").attr('sortBy','none')
-			$("#ratingButton").attr('sortBy','none')
-			
-			
-			order = 'descending';
-			currentSortby ='timeDesc'
-		}
-		
-		
-		 
-		var allImages=[]
-		
-		$(".mealDiv").each(function(){
-			allImages.push($(this))
-		})
-		
-		if(order == 'descending'){
-			allImages = allImages.sort(function(a,b){return a.attr('timestamp') - b.attr('timestamp')})
-
-			for (var i = 0; i < allImages.length; i++) {
-				var self = $(allImages[i]);
-				self.detach();
-				$("#food_photos_table").prepend(self);
-			}
-		}
-		else{
-			allImages = allImages.sort(function(a,b){return b.attr('timestamp') - a.attr('timestamp')})
-
-			for (var i = 0; i < allImages.length; i++) {
-				var self = $(allImages[i]);
-				self.detach();
-				$("#food_photos_table").prepend(self);
-			}
-		}
-		
-	}
-	*/
-	
-}
-
-
-
-
-
 
 
 
 /*
 
 CSV Utils
-
+From http://jsfiddle.net/sturtevant/AZFvQ/
 */
 function CSV2JSON(csv) {
     var array = CSVToArray(csv);

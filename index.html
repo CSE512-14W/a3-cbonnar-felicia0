@@ -1,53 +1,67 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 <body>
-<h1>Hellz Yeah Food Photos!</h1>
-<div class = "tooltip_photo" id="tooltip" style="position:absolute;width:auto;height:100px;z-index:10;background-color:white;border:black;">hello</div>
-<div id="sortOptions" style="float:right">
-	Sort Options:
-	<input type="radio" name="sortOption" id="mealType" value="location" onclick="sortPhotos(this)"> Location
-	<input type="radio" name="sortOption" id="starRating" value="stars" onclick="sortPhotos(this)"> Star Rating
-		<input type="radio" name="sortOption" id="meal" value="meal" onclick="sortPhotos(this)"> Meal
-	<input type="radio" name="sortOption" id="date" value="dateTime" onclick="sortPhotos(this)" checked> Time</div>
-</div>
-
+<div class = "site_title">Food N' Stuff: An Interactive Photo Food Journal</div>
+<link href='http://fonts.googleapis.com/css?family=Fauna+One' rel='stylesheet' type='text/css'>
 <div style="float:right">
-    <div style="float:left">Breakfast: </div>
-    <div style="width:30px;height:20px;float:right;background:green;"></div>
-    <div style="width:20px;height:20px;background:white;float:right"></div>
-    <div style="float:left">Lunch: </div>
-    <div style="width:30px;height:20px;float:left;background:blue;"></div>
-    <div style="width:20px;height:20px;background:white;float:right"></div>
-    <div style="float:left">Dinner: </div>
-    <div style="width:30px;height:20px;float:left;background:green;"></div>
-    <div style="width:20px;height:20px;background:white;float:right"></div>
-    <div style="float:left">Snack: </div>
-    <div style="width:30px;height:20px;float:left;background:blue;"></div>
-    <div style="width:20px;height:20px;background:white;float:right"></div>
-    <div style="float:left">Beverage: </div>
-    <div style="width:30px;height:20px;float:left;background:green;"></div>
-    <div style="width:20px;height:20px;background:white;float:right"></div>
-    <div style="float:left">Other: </div>
-    <div style="width:30px;height:20px;float:left;background:blue;"></div>
+	<div id="sortOptions" style="float:right">
+		Sort Options:
+		<input type="radio" name="sortOption" id="mealType" value="location" onclick="sortPhotos(this)"> Location
+		<input type="radio" name="sortOption" id="starRating" value="stars" onclick="sortPhotos(this)"> Star Rating
+			<input type="radio" name="sortOption" id="meal" value="meal" onclick="sortPhotos(this)"> Meal
+		<input type="radio" name="sortOption" id="date" value="dateTime" onclick="sortPhotos(this)" checked> Date</div>
+	</div>
 </div>
 <div class = "unsorted" id = "photopane"></div>
 <div class="sorted"></div>
-<div id = "barchart">
-	<div class="filter_box" style="width:200px">
-	<div class="box" id = "filters">Filters: </div>
-	</div>
-	<div class ="radio_dimension">
-	<strong>  x-axis:</strong><br>
-	<input type="radio" name="dimension" id="place_eaten" value="Place eaten" axisType="location" onclick="construct_Graph()" checked> Place Eaten<br>
-	<input type="radio" name="dimension" id="day_of_week" value="Day of Week" axisType="dayOfWeek" onclick="construct_Graph()"> Day of Week<br>
-	<input type="radio" name="dimension" id="people_with" value="People Ate With" axisType = "numPeople" onclick="construct_Graph()"> People Ate With</div>
+<br>
+<div style="">
+    <div style="float:left">Breakfast: </div>
+    <div id="breakfast_color"style="width:30px;height:20px;float:left;"></div>
+    <div style="width:20px;height:20px;float:left"></div>
+    <div style="float:left">Lunch: </div>
+    <div id="lunch_color" style="width:30px;height:20px;float:left;"></div>
+    <div style="width:20px;height:20px;float:left"></div>
+    <div style="float:left">Dinner: </div>
+    <div id="dinner_color" style="width:30px;height:20px;float:left;"></div>
+    <div style="width:20px;height:20px;float:left"></div>
+    <div style="float:left">Snack: </div>
+    <div id="snack_color" style="width:30px;height:20px;float:left;"></div>
+    <div style="width:20px;height:20px;float:left"></div>
+    <div style="float:left">Beverage: </div>
+    <div id="beverage_color" style="width:30px;height:20px;float:left;"></div>
+    <div style="width:20px;height:20px;float:left"></div>
+    <div style="float:left">Other: </div>
+    <div id="other_color" style="width:30px;height:20px;float:left;"></div>
+</div>
+<br>
+
+<div class = "container" style="width:100%">
+<div class = "left_div" style="float:left;width:25%">
+	<div class ="tip_button"><button type="button" id = "toggle_tips" onclick ="show_Tips()">Instructions</button></div>
 	<div class ="radio_measure">
-	<strong>  y-axis:</strong><br>
+	<strong>  Measure:</strong><br>
 	<input type="radio" name="measure" id="star_ratings" value="Star Rating" type = "stars" onclick="construct_Graph()" checked> Star Rating<br>
 	<input type="radio" name="measure" id="num_photos" value="Number of Photos" onclick="construct_Graph()"> Number of Photos<br>
 	</div>
-	
+	<div class ="tip1"><img src = "/tips/tip1.png" height="100px" width="190px" id="tip1" style = "display:none"></div>
 </div>
+
+
+<div id = "barchart" style="float:left;width:35%">
+</div>
+
+<div id = "right_div" style="float:left;width:25%">
+<div class="filter_box" style="width:200px"><div class="box" id = "filters">Filters: </div></div>
+<div class ="tip2"><img src = "/tips/tip2.png" height="100px" width="190px" id="tip2" style = "display:none"></div>
+<div class ="radio_dimension">
+	<strong>  Category:</strong><br>
+	<input type="radio" name="dimension" id="place_eaten" value="Place eaten" axisType="location" onclick="construct_Graph()" checked> Location Eaten<br>
+	<input type="radio" name="dimension" id="day_of_week" value="Day of Week" axisType="dayOfWeek" onclick="construct_Graph()"> Day of Week<br>
+	<input type="radio" name="dimension" id="people_with" value="People Ate With" axisType = "numPeople" onclick="construct_Graph()"> People Dined With</div>
+</div>
+</div>
+
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
 <script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>

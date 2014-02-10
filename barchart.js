@@ -1,5 +1,5 @@
-var margin = {top: 40, right: 20, bottom: 30, left: 400},
-    width = 800 - margin.left - margin.right,
+var margin = {top: 40, right: 20, bottom: 30, left: 50},
+    width = 500 - margin.left - margin.right,
     height = 300 - margin.top - margin.bottom;
     
 var places = [
@@ -69,7 +69,7 @@ function construct_Graph() {
 		.offset([-10, 0])
 		.html(function(d) {return "<strong>Average Rating: </strong> <span style='color:red'>" + d.rating + "</span></br><strong>Number of Photos: </strong><span style='color:red'>" + d.photos + "</span>";})
 
-	var svg = d3.select("body").append("svg")
+	var svg = d3.select("#barchart").append("svg")
 		.attr("width", width + margin.left + margin.right)
 		.attr("height", height + margin.top + margin.bottom)
 		.append("g")
@@ -150,16 +150,22 @@ function selectBar(d,i,selectedBar) {
 		selectedBar.attr("style","fill:steelblue");
 	}
 	
-	//$.getScript("photopane.js", function(){ document.getElementById('filters').innerHTML = Object.keys(currentFilters);});
-	//$.getScript("photopane.js", function(){ 
-	//	console.log("Photopane javascript loaded from barchart.js");
-		var filters = Object.keys(currentFilters)
-		var filterString = "";
-		for(f in filters){
-			filterString = filters[f] +" = "+currentFilters[filters[f]] + "<br>" + filterString
+	var filters = Object.keys(currentFilters)
+	var filterString = "";
+	for(f in filters){
+		var categoryType = filters[f];
+		if(categoryType == "numPeople"){
+			categoryType = "People in Group: ";
+		} else if(categoryType == "location") {
+			categoryType = "Location: ";
+		} else if(categoryType == "dayOfWeek") {
+			categoryType = "Day of Week: ";
 		}
-		$('#filters').html("Filters: <br>" + filterString)
-	//});
+		
+		filterString = categoryType + currentFilters[filters[f]].charAt(0).toUpperCase() + currentFilters[filters[f]].slice(1) + "<br>" + filterString
+	}
+	
+	$('#filters').html("<b>Filter:</b> <br>" + filterString)
 };
 
 function unselectBar() {
@@ -167,8 +173,21 @@ function unselectBar() {
 		$(this).attr("style","fill:steelblue")
 	})
 	currentFilters={}
-	$('#filters').html("Filters:")
+	filterPhotos({})
+	$('#filters').html("<b>Filter:</b>")
 }
+
+function show_Tips() {
+	if(document.getElementById('tip1').style.display == 'none') {
+		document.getElementById('tip1').style.display = 'block';
+		document.getElementById('tip2').style.display = 'block';
+	}
+	else {
+		document.getElementById('tip1').style.display = 'none';
+		document.getElementById('tip2').style.display = 'none';
+	}
+}
+
 
 //Stuff I did to try and dynamically average... almost works...
 /*
