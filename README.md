@@ -30,6 +30,8 @@ Access our visualization [here!](http://mydecaf.org:9517/index.html)
 
 There was one feature from our storyboard mock-up that we didn't end up implementing, due to CSS/jQuery issues (and time constraint). That was the tool-tip for the photo, which would have given a more detailed description of the meal such as star rating, time consumed, place eaten, and written description. Otherwise our final visualization was layed out very similarly to our storyboard. 
 
+We also included an "Instructions" button that pops two tip bubbles up next to the features they described, which we did not mention in our storyboard. We decided to add these after implementation because our visualization isn't standard, and we wanted to make sure the interaction techniques were realized. We made the tips hide by default so the interface wasn't cluttered. They can also be hidden by clicking the button again. 
+
 ## Development Process
 
 ###Breakdown:
