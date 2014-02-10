@@ -41,6 +41,7 @@ Both of us worked on the storyboard and HTML/CSS aspects together.
 ### Dev process/time spent on components
 * We spent the first few days of the assignment (~8 hours) storyboarding our visualization. We used techniques like paper prototyping and iterative enhancement to refine our mockup. 
 * We started by splitting the code into two main separate javascript files (and one main HTML file) so that we could begin parellilizing our work. Felicia began the photopane work and Caitlin began building the bar chart. 
+
 Here is the breakdown:
 * Porting the data: ~2 hours
 * Cleaning and aggregating data: ~2 hours
