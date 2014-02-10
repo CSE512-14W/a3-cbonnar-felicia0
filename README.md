@@ -5,7 +5,7 @@
 1. Caitlin Bonnar cbonnar@cs
 2. Felicia Cordeiro felicia0@cs
 
-## Food N' Stuff: An Interactive Food Photo Journal
+## Food N' Stuff: An Interactive Photo Food Journal
 
 Food N' Stuff is an interactive visualization tool for exploring your photo-based food journal. 
 
