@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<body>
+<h1>Hellz Yeah Food Photos!</h1>
+<div class = "tooltip_photo" id="tooltip" style="position:absolute;width:auto;height:100px;z-index:10;background-color:white;border:black;">hello</div>
+<div id="sortOptions" style="float:right">
+	Sort Options:
+	<input type="radio" name="sortOption" id="mealType" value="location" onclick="sortPhotos(this)"> Location
+	<input type="radio" name="sortOption" id="starRating" value="stars" onclick="sortPhotos(this)"> Star Rating
+		<input type="radio" name="sortOption" id="meal" value="meal" onclick="sortPhotos(this)"> Meal
+	<input type="radio" name="sortOption" id="date" value="dateTime" onclick="sortPhotos(this)" checked> Time</div>
+</div>
+
+<div style="float:right">
+    <div style="float:left">Breakfast: </div>
+    <div style="width:30px;height:20px;float:right;background:green;"></div>
+    <div style="width:20px;height:20px;background:white;float:right"></div>
+    <div style="float:left">Lunch: </div>
+    <div style="width:30px;height:20px;float:left;background:blue;"></div>
+    <div style="width:20px;height:20px;background:white;float:right"></div>
+    <div style="float:left">Dinner: </div>
+    <div style="width:30px;height:20px;float:left;background:green;"></div>
+    <div style="width:20px;height:20px;background:white;float:right"></div>
+    <div style="float:left">Snack: </div>
+    <div style="width:30px;height:20px;float:left;background:blue;"></div>
+    <div style="width:20px;height:20px;background:white;float:right"></div>
+    <div style="float:left">Beverage: </div>
+    <div style="width:30px;height:20px;float:left;background:green;"></div>
+    <div style="width:20px;height:20px;background:white;float:right"></div>
+    <div style="float:left">Other: </div>
+    <div style="width:30px;height:20px;float:left;background:blue;"></div>
+</div>
+<div class = "unsorted" id = "photopane"></div>
+<div class="sorted"></div>
+<div id = "barchart">
+	<div class="filter_box" style="width:200px">
+	<div class="box" id = "filters">Filters: </div>
+	</div>
+	<div class ="radio_dimension">
+	<strong>  x-axis:</strong><br>
+	<input type="radio" name="dimension" id="place_eaten" value="Place eaten" axisType="location" onclick="construct_Graph()" checked> Place Eaten<br>
+	<input type="radio" name="dimension" id="day_of_week" value="Day of Week" axisType="dayOfWeek" onclick="construct_Graph()"> Day of Week<br>
+	<input type="radio" name="dimension" id="people_with" value="People Ate With" axisType = "numPeople" onclick="construct_Graph()"> People Ate With</div>
+	<div class ="radio_measure">
+	<strong>  y-axis:</strong><br>
+	<input type="radio" name="measure" id="star_ratings" value="Star Rating" type = "stars" onclick="construct_Graph()" checked> Star Rating<br>
+	<input type="radio" name="measure" id="num_photos" value="Number of Photos" onclick="construct_Graph()"> Number of Photos<br>
+	</div>
+	
+</div>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+<script type="text/javascript" src="dv.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/jquery-ui.js"></script>
+<script src="http://code.jquery.com/jquery.min.js"></script>
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.min.js"></script>
+<link href="default.css" rel="stylesheet" type="text/css"/> 
+<link href="photopane.css" rel="stylesheet" type="text/css"/> 
+<script src="photopane.js"></script>
+<script src="barchart.js"></script>
+
+
+
+
+<!--
+<script>
+
+var margin = {top: 20, right: 40, bottom: 30, left: 20},
+    width = 960 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom,
+    barWidth = Math.floor(width / 19) - 1;
+
+var x = d3.scale.linear()
+    .range([barWidth / 2, width - barWidth / 2]);
+
+var y = d3.scale.linear()
+    .range([height, 0]);
+
+var yAxis = d3.svg.axis()
+    .scale(y)
+    .orient("right")
+    .tickSize(-width)
+    .tickFormat(function(d) { return Math.round(d / 1e6) + "M"; });
+
+// An SVG element with a bottom-right origin.
+var svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+// A sliding container to hold the bars by birthyear.
+var birthyears = svg.append("g")
+    .attr("class", "birthyears");
+
+// A label for the current year.
+var title = svg.append("text")
+    .attr("class", "title")
+    .attr("dy", ".71em")
+    .text("Hellz Yeah Food Photos!");
+
+d3.csv("part15.csv", function(error, data) {
+	
+	data.forEach(function(d) {
+		console.log(d)
+	    d.social_howmany = +d.social_howmany;
+	    d.starRating = +d.starRating;
+	    d.age = +d.age;
+	});
+	
+});
+
+</script>
+-->

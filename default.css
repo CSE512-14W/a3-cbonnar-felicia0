@@ -1,0 +1,137 @@
+svg {
+  font: 10px sans-serif;
+}
+
+.y.axis path {
+  display: none;
+}
+
+.y.axis line {
+  stroke: #fff;
+  stroke-opacity: .2;
+  shape-rendering: crispEdges;
+}
+
+.y.axis .zero line {
+  stroke: #000;
+  stroke-opacity: 1;
+}
+
+.title {
+  font: 300 78px Helvetica Neue;
+  fill: #666;
+}
+
+.birthyear,
+.age {
+  text-anchor: middle;
+}
+
+.birthyear {
+  fill: #fff;
+}
+
+rect {
+  fill-opacity: .6;
+  fill: #e377c2;
+}
+
+rect:first-child {
+  fill: #1f77b4;
+}
+
+
+.bar {
+  fill: steelblue;
+}
+
+.bar:hover {
+  fill: brown;
+}
+
+.axis {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.x.axis path {
+  display: none;
+}
+.d3-tip {
+  line-height: 1;
+  font-weight: bold;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 2px;
+}
+
+/* Creates a small triangle extender for the tooltip */
+.d3-tip:after {
+  box-sizing: border-box;
+  display: inline;
+  font-size: 10px;
+  width: 100%;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.8);
+  content: "\25BC";
+  position: absolute;
+  text-align: center;
+}
+
+/* Style northward tooltips differently */
+.d3-tip.n:after {
+  margin: -1px 0 0 0;
+  top: 100%;
+  left: 0;
+}
+
+#photopane{
+	height:400px;
+	overflow-y: auto;
+	border:2px solid;
+	border-radius:25px;
+}
+
+#barchart{
+	position:absolute;
+	height:270px;
+}
+
+#theBox_3, #theBox_2{
+    display: none; 
+    border: 1px solid #000;
+    width: 200px;
+    height: 100px;
+    background-color: #ddf;
+}
+
+.radio_dimension{
+	position:absolute;
+	bottom:0px;
+	padding-left: 780px;
+	white-space: nowrap;
+}
+.radio_measure{
+	position:absolute;
+	bottom:200px;
+	padding-left: 220px;
+	white-space: nowrap;
+}
+
+.filter_box{
+	margin-left:auto;
+	position: absolute;
+	padding-left:780px;
+	bottom:200px;
+}
+.box {
+	border:2px solid;
+	padding: 5px 5px 5px 5px;
+}
